@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Header() {
-  const { color } = useContext(ThemeContext);
+  const { color, setColor } = useContext(ThemeContext);
   return (
     <header>
       <nav
@@ -14,7 +14,7 @@ export default function Header() {
             🍕 Pizza Hot
           </a>
           <button className="btn btn-dark">
-            <i class="bi bi-cart3"></i>
+            <i className="bi bi-cart3"></i>
             <span className="ms-2">(0)</span>
           </button>
         </div>
