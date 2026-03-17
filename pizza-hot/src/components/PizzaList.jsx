@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
 import Pizza from "./Pizza";
+import useFetch from "../hooks/useFetch";
+
+const config = {
+  method: "GET",
+};
 
 export default function PizzaList() {
   const [pizzas, setPizzas] = useState([]);
 
-  useEffect(() => {
-    async function getPizzaList() {
-      const response = await fetch("http://localhost:3000/pizzas");
+  //http://localhost:3000/pizzas
+  const { data, isLoading, error } = useFetch(
+    "http://localhost:3000/pizzas",
+    config,
+  );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch pizza list");
-      }
+  if (isLoading) {
+    return <div className="alert alert-warning">Yükleniyor...</div>;
+  }
 
-      const pizzas = await response.json();
-      setPizzas(pizzas);
-    }
-    getPizzaList();
-  }, []);
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
 
   return (
     <div className="pizza-list">
       <div className="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-4">
-        {pizzas.map((pizza) => (
+        {data.map((pizza) => (
           <Pizza key={pizza.id} pizza={pizza} />
         ))}
       </div>
