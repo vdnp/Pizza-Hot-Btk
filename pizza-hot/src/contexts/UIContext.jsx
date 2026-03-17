@@ -13,10 +13,20 @@ export function UIContextProvider({ children }) {
     setUIProgress("");
   }
 
+  function showCheckOut() {
+    setUIProgress("checkout");
+  }
+
+  function hideCheckOut() {
+    setUIProgress("");
+  }
+
   const uiProgressContext = {
     uiProgress,
     showCart,
     hideCart,
+    showCheckOut,
+    hideCheckOut,
   };
 
   return (

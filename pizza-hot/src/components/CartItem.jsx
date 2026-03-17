@@ -2,7 +2,7 @@ export default function CartItem({ item, onIncrease, onDecrease }) {
   return (
     <li className="cart-item border-bottom p-2">
       <p>
-        {item.name} - Fiyat: {item.price} TL
+        {item.title} - Fiyat: {item.price * item.quantity} TL
       </p>
       <div className="actions">
         <button onClick={onDecrease} className="btn btn-sm btn-outline-primary">
