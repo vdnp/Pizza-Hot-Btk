@@ -12,12 +12,32 @@ export default function CheckOut() {
     0,
   );
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const customerData = Object.fromEntries(formData.entries());
+
+    fetch("http://localhost:3000/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        order: {
+          items: items,
+          customer: customerData,
+        },
+      }),
+    });
+  }
+
   return (
     <Modal open={uiProgress === "checkout"}>
       <h2>CheckOut</h2>
       <p className="text-danger">Sipariş Toplamı {cartTotal} ₺</p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Ad Soyad
@@ -56,10 +76,10 @@ export default function CheckOut() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="adress" className="form-label">
+          <label htmlFor="address" className="form-label">
             Adres
           </label>
-          <textarea name="adress" id="adress" className="form-control" />
+          <textarea name="address" id="address" className="form-control" />
         </div>
 
         <div className="row">
@@ -91,16 +111,18 @@ export default function CheckOut() {
             </div>
           </div>
         </div>
+
+        <button
+          onClick={() => hideCheckOut()}
+          className="btn btn-sm btn-outline-danger me-2"
+        >
+          Kapat
+        </button>
+
+        <button type="submit" className="btn btn-sm btn-primary me-2">
+          Kaydet
+        </button>
       </form>
-
-      <button
-        onClick={() => hideCheckOut()}
-        className="btn btn-sm btn-outline-danger me-2"
-      >
-        Kapat
-      </button>
-
-      <button className="btn btn-sm btn-primary me-2">Kaydet</button>
     </Modal>
   );
 }
