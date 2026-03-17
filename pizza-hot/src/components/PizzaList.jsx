@@ -13,6 +13,7 @@ export default function PizzaList() {
   const { data, isLoading, error } = useFetch(
     "http://localhost:3000/pizzas",
     config,
+    [],
   );
 
   if (isLoading) {
